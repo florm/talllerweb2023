@@ -76,5 +76,10 @@ public class ControladorLogin {
     public ModelAndView inicio() {
         return new ModelAndView("redirect:/login");
     }
+
+
+
+
+
 }
 
