@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.ServicioUsuario1;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,34 +11,28 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControladorRegistro {
 
 
-    ServicioLogin servicioLogin;
+    ServicioUsuario1 servicioUsuario;
 
     @Autowired
-    public ControladorRegistro(ServicioLogin servicioLogin){
-        this.servicioLogin = servicioLogin;
+    public ControladorRegistro(ServicioUsuario1 servicioUsuario){
+        this.servicioUsuario = servicioUsuario;
     }
 
     public ModelAndView registrar(String email) {
-        ModelMap modelo = new ModelMap();
-        String nombreVista = "";
         if(email.isEmpty()){
-            modelo.put("mensaje", "El registro fallo");
-            nombreVista = "registro";
-        }else{
-            try{
-                Usuario nuevoUsuario = new Usuario();
-                nuevoUsuario.setEmail("flor@gmail.com");
-                servicioLogin.registrar(nuevoUsuario);
-                modelo.put("mensaje", "El registro fue exitoso");
-                nombreVista="login";
-            }
-            catch(UsuarioExistente ex){
-                modelo.put("mensaje", "El registro fallo");
-                nombreVista = "registro";
-            }
-
-
+            ModelMap modelo = new ModelMap();
+            modelo.put("error", "El email es obligatorio");
+            return new ModelAndView("registro", modelo);
         }
-        return new ModelAndView(nombreVista, modelo);
+        try{
+            servicioUsuario.registrar(email, "");
+        }catch(UsuarioExistente ex){
+            ModelMap modelo = new ModelMap();
+            modelo.put("error", "El usuario ya existe");
+            return new ModelAndView("registro", modelo);
+        }
+
+
+        return new ModelAndView("redirect:/login");
     }
 }

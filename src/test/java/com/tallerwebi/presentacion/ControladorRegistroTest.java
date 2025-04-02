@@ -1,49 +1,38 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.ServicioUsuario1;
+import com.tallerwebi.dominio.ServicioUsuario1Impl;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-public class ControladorRegistroTest {
+public class    ControladorRegistroTest {
+
     /*
-    * 1.Necesito un email y una contraseña para que el usuario se pueda registrar
+    * 1. Usuario necesita mail y password para registrarse
     *
     * */
 
-    ServicioLogin servicioLogin = mock(ServicioLogin.class);
-    ControladorRegistro controladorRegistro = new ControladorRegistro(servicioLogin);
-    @Test
-    public void siIngresoEmailYClaveSeRegistraCorrectamente(){
+    ServicioUsuario1 servicioUsuario1 = mock(ServicioUsuario1Impl.class);
+    ControladorRegistro controladorRegistro = new ControladorRegistro(servicioUsuario1);
 
-        //1. given o dado que-> preparacion
-        //2. when o cuando -> ejecucion
-        ModelAndView mav = whenRegistroUsuario("flor@gmail.com");
-        //3 then -> validacion
+    @Test
+    public void siExisteEmailYPasswordElRegistroEsExitoso(){
+
+        //preparacion -> given
+        givenNoExisteUsuario();
+        //ejecucion -> when
+        ModelAndView mav =  whenRegistroUsuario("flor@gmail.com");
+        //comprobacion -> then
         thenElRegistroEsExitoso(mav);
     }
 
-
-    @Test
-    public void siElEmailEstaVacioElRegistroFalla(){
-
-        //1. given o dado que-> preparacion
-        //2. when o cuando -> ejecucion
-        ModelAndView mav = whenRegistroUsuario("");
-        //3 then -> validacion
-        thenElRegistroFalla(mav);
-    }
-
-    private void thenElRegistroFalla(ModelAndView mav) {
-        assertThat(mav.getModel().get("mensaje").toString(), equalToIgnoringCase("El registro fallo"));
-        assertThat(mav.getViewName(), equalToIgnoringCase("registro"));
+    private void givenNoExisteUsuario() {
     }
 
     private ModelAndView whenRegistroUsuario(String email) {
@@ -52,21 +41,36 @@ public class ControladorRegistroTest {
     }
 
     private void thenElRegistroEsExitoso(ModelAndView mav) {
-     //mensaje El registro fue exitoso
-        //voy a vista login
-        assertThat(mav.getModel().get("mensaje").toString(), equalToIgnoringCase("El registro fue exitoso"));
-        assertThat(mav.getViewName(), equalToIgnoringCase("login"));
+        assertThat(mav.getViewName(), equalToIgnoringCase("redirect:/login"));
     }
 
     @Test
-    public void siElUsuarioExisteElRegistroFalla() throws UsuarioExistente {
+    public void siElEmailEstaVacioElRegistroFalla(){
 
-        doThrow(UsuarioExistente.class)
-                .when(servicioLogin).registrar(any());
+        //preparacion -> given
+        givenNoExisteUsuario();
+        //ejecucion -> when
+        String emailVacio = "";
+        ModelAndView mav =  whenRegistroUsuario(emailVacio);
+        //comprobacion -> then
+        thenElRegistroFalla(mav, "El email es obligatorio");
+    }
 
-        ModelAndView mav = whenRegistroUsuario("flor@gmail.com");
+    private void thenElRegistroFalla(ModelAndView mav, String mensaje) {
+        assertThat(mav.getViewName(), equalToIgnoringCase("registro"));
+        assertThat(mav.getModel().get("error").toString(), equalToIgnoringCase(mensaje));
+    }
 
-        thenElRegistroFalla(mav);
+    @Test
+    public void siLasPasswordSonDistintasElRegistroFalla(){
+
+    }
+
+    @Test
+    public void siExisteUsuarioConEmailDelRegistroElRegistroFalla(){
+        when(servicioUsuario1.registrar("flor@gmail.com", "")).thenThrow(UsuarioExistente.class);
+        ModelAndView mav =  whenRegistroUsuario("flor@gmail.com");
+        thenElRegistroFalla(mav, "El usuario ya existe");
     }
 
 }

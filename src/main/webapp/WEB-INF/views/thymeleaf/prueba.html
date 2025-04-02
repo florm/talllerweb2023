@@ -26,13 +26,48 @@
 
     <span th:text="${nombre}"></span>
     <span th:text="${apellido}"></span>
+
+
+
+
     <a th:href="@{/despedida}">Salir</a>
 
+    <p>Sumar con GET requestParam</p>
+    <form th:action="@{/sumarConRequestParam}">
+      <input th:name="val1">
+      <input th:name="val2">
+      <button th:type="submit" th:text="Sumar"/>
+    </form>
+
+    <p>Sumar con GET pathVariable</p>
+    <form>
+      <input type="text" th:name="val1" id="val1">
+      <input type="text" th:name="val2" id="val2">
+      <button type="button" onclick="submitForm()">Sumar</button>
+    </form>
+
+    <p>Sumar con form</p>
+    <form th:action="@{/sumarConForm}" method="POST" th:object="${datosSumaDto}">
+      <input th:field="*{input1}">
+      <input th:field="*{input2}">
+      <button th:type="submit" th:text="Sumar"/>
+    </form>
+
+    <p th:if="${resultado != null}" th:text="'El resultado es: ' + ${resultado}">
   </div>
 </main>
 <!-- /.container -->
 
 <!-- Boostrap core js -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+<script>
+  function submitForm() {
+    var val1 = document.getElementById('val1').value;
+    var val2 = document.getElementById('val2').value;
+    var contextPath = window.location.pathname.split('/')[1];
+    var url = '/' + contextPath + '/sumarConPathVariable/' + val1 + '/' + val2;
+    window.location.href = url;
+  }
+</script>
 </body>
 </html>
