@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     private SessionFactory sessionFactory;
+    private String prueba;
 
     @Autowired
     public RepositorioUsuarioImpl(SessionFactory sessionFactory){
