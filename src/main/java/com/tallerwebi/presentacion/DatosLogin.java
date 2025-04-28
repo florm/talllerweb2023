@@ -4,6 +4,8 @@ public class DatosLogin {
     private String email;
     private String password;
 
+    private String prueba;
+
     public DatosLogin() {
     }
 
