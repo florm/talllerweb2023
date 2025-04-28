@@ -14,7 +14,7 @@ public class Usuario {
     private String email;
     private String password;
     private String rol;
-    private Boolean activo = false;
+    private Boolean activo2 = false;
 
     public Long getId() {
         return id;
@@ -41,17 +41,17 @@ public class Usuario {
         this.rol = rol;
     }
     public Boolean getActivo() {
-        return activo;
+        return activo2;
     }
     public void setActivo(Boolean activo) {
-        this.activo = activo;
+        this.activo2 = activo;
     }
 
     public boolean activo() {
-        return activo;
+        return activo2;
     }
 
     public void activar() {
-        activo = true;
+        activo2 = true;
     }
 }
