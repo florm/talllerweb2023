@@ -4,7 +4,7 @@ public class DatosLogin {
     private String email;
     private String password;
 
-    private String prueba2;
+    private String prueba;
 
     public DatosLogin() {
     }
