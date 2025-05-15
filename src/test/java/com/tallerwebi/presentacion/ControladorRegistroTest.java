@@ -1,10 +1,15 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.PasswordLongitudIncorrectaException;
+import com.tallerwebi.dominio.ServicioRegistro;
+import com.tallerwebi.dominio.Usuario;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class ControladorRegistroTest {
 
@@ -17,6 +22,8 @@ public class ControladorRegistroTest {
 
     private final String email = "flor@gmail.com";
     private final String password = "1234";
+
+    ServicioRegistro servicioRegistro = mock(ServicioRegistro.class);
 
     @Test
     public void conEmailYPasswordElRegistroEsExitoso() {
@@ -59,13 +66,23 @@ public class ControladorRegistroTest {
     }
 
     private ModelAndView whenRegistroUsuario(String email, String password) {
-        ControladorRegistro controladorRegistro = new ControladorRegistro();
+        ControladorRegistro controladorRegistro = new ControladorRegistro(servicioRegistro);
         ModelAndView mav = controladorRegistro.registrar(email, password);
         return mav;
     }
 
     private void thenElRegistroEsExitoso(ModelAndView mav) {
         assertThat(mav.getViewName(), equalToIgnoringCase("login"));
+    }
+
+    @Test
+    public void siLaPasswordTieneMenosDeCincoCaraceresElRegistroFalla() {
+        givenNoExiteUsuario();
+        //Setea el comportamiento del mock (servicioRegistro)
+        doThrow(PasswordLongitudIncorrectaException.class)
+                .when(servicioRegistro).registrar("flor@gmail.com","1234");
+        ModelAndView mav= whenRegistroUsuario("flor@gmail.com", "1234");
+        thenElRegistroFalla(mav, "El password debe tener al menos cinco caracteres");
     }
 
 
