@@ -124,7 +124,7 @@ public class RepositorioFarmaciaTest {
         givenTengoUnaFarmacia("natal", "rivadavia", 123, haedo);
 
         List<Farmacia> farmacias = whenBuscoFarmaciaPorLocalidad(haedo);
-        thenEncuentroFarmacias(farmacias, 2);
+        thenEncuentroFarmacias(farmacias, 3);
     }
 
     private List<Farmacia> whenBuscoFarmaciaPorLocalidad(Localidad localidad) {
