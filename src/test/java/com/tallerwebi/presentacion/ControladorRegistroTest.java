@@ -85,6 +85,38 @@ public class ControladorRegistroTest {
         thenElRegistroFalla(mav, "El password debe tener al menos cinco caracteres");
     }
 
+    //v1
+//    @Test
+//    public void elRegistroFallaSiLaPasswordTieneMenosDe6Caracteres() {
+//        givenNoExisteUsuario();
+//        DatosRegistro datosRegistro = new DatosRegistro(email, passwordMenos6Caracteres);
+//        ModelAndView modelAndView = whenRegistroUsuario(datosRegistro);
+//        thenElRegistroFalla(modelAndView, "La contraseña debe tener al menos 6 caracteres");
+//
+//    }
+    //v2
+//    @Test
+//    public void elRegistroFallaSiLaPasswordTieneMenosDe6Caracteres() {
+//        givenNoExisteUsuario();
+//        DatosRegistro datosRegistro = new DatosRegistro(email, passwordMenos6Caracteres);
+//        doThrow(PasswordIncorrectaException.class)
+//                .when(servicioRegistro).registrar(datosRegistro);
+//        ModelAndView modelAndView = whenRegistroUsuario(datosRegistro);
+//        thenElRegistroFalla(modelAndView, "La contraseña debe tener al menos 6 caracteres");
+//
+//    }
 
+//    @Test
+//    public void elRegistroFallaSiExisteUsuarioConMismoMail() {
+//        DatosRegistro datosRegistro = new DatosRegistro(email, password);
+//        givenExisteUsuario(datosRegistro);
+//        doThrow(UsuarioExistente.class).when(servicioRegistro).registrar(datosRegistro);
+//        ModelAndView mav = whenRegistroUsuario(datosRegistro);
+//        thenElRegistroFalla(mav, "Ya existe un usuario con el mismo email");
+//    }
+//
+//    private void givenExisteUsuario(DatosRegistro datosRegistro) {
+//        controladorRegistro.registrar(datosRegistro);
+//    }
 
 }

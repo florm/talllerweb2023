@@ -22,10 +22,13 @@ public class ServicioRegistroTest {
     }
 
     private void thenElRegistroEsExitoso(Usuario usuarioCreado) {
+
         assertThat(usuarioCreado, is(notNullValue()));
     }
 
     private Usuario whenRegistroUsuario(String email, String password) {
+//        datosRegistro.setMail(email);
+//        datosRegistro.setPassword(password);
         return servicioRegistro.registrar(email, password);
     }
 
@@ -47,4 +50,16 @@ public class ServicioRegistroTest {
         assertThat(usuarioCreado, is(nullValue()));
     }
 
+    ///version con DTO
+//    @Test
+//    public void siExisteUsuarioConMismoMailElRegistroFalla() {
+//        givenExisteUsuario(email, password);
+//        assertThrows(UsuarioExistente.class, ()-> whenRegistroUsuario(email, password));
+////        Usuario usuarioCreado = whenRegistroUsuario(email, password);
+////        thenElRegistroFalla(usuarioCreado);
+//    }
+//
+//    private void givenExisteUsuario(String email, String password) {
+//        whenRegistroUsuario(email, password);
+//    }
 }

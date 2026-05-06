@@ -20,4 +20,12 @@ public class ServicioRegistroImpl implements ServicioRegistro {
         //return new Usuario();
     //}
 
+//    List<Usuario> usuarios = new ArrayList<>();
+//    private Usuario buscarUsuarioPorEmail(DatosRegistro datosRegistro){
+//        Usuario usuarioBuscado = usuarios
+//                .stream()
+//                .filter(u -> u.getEmail().equals(datosRegistro.getMail())).findFirst().orElse(null);
+//        return usuarioBuscado;
+//    }
+
 }
