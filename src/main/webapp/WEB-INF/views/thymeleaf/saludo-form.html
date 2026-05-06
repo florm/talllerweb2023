@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Formulario de saludo</h2>
+
+<form th:action="@{/mostrar-saludo}" method="GET">
+
+    <label>Ingrese su nombre:</label>
+
+    <input
+            type="text"
+            name="nombre"
+            required>
+
+    <button type="submit">
+        Saludar
+    </button>
+
+</form>
+
+</body>
+</html>

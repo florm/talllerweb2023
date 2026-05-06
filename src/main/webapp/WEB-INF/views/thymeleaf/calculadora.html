@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/calcular}" method="POST"
+      th:object="${calculadora}">
+
+  <input th:field="*{numero1}" type="number">
+
+  <input th:field="*{numero2}" type="number">
+
+  <select th:field="*{operacion}">
+    <option value="sumar">Sumar</option>
+    <option value="restar">Restar</option>
+    <option value="multiplicar">Multiplicar</option>
+    <option value="dividir">Dividir</option>
+  </select>
+
+  <button type="submit">
+    Calcular
+  </button>
+
+  <p th:if="${resultado != null}"
+     th:text="'Resultado: ' + ${resultado}">
+  </p>
+
+  <p th:if="${error != null}"
+     th:text="${error}">
+  </p>
+
+</form>
+
+</body>
+</html>

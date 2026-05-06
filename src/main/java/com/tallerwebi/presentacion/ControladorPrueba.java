@@ -19,7 +19,7 @@ public class ControladorPrueba {
     * asociar a un metodo
     * */
 
-    @RequestMapping("/saludo")
+    @RequestMapping("/saludo1")
     public ModelAndView irASaludo(){
 
         ModelMap modelo = new ModelMap();
