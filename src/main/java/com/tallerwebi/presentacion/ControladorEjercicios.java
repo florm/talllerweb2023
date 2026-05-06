@@ -27,14 +27,14 @@ public class ControladorEjercicios {
                 model);
     }
 
-    @RequestMapping("/buscar-producto")
+    @RequestMapping("/productos")
     public ModelAndView irABuscarProducto() {
 
         return new ModelAndView(
                 "buscar-producto");
     }
 
-    @RequestMapping(value = "/buscar-producto", method = RequestMethod.POST)
+    @RequestMapping(value = "/buscar-producto")
     public ModelAndView buscarProducto(
             @RequestParam Integer id) {
 
