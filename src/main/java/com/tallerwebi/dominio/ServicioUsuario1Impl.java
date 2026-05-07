@@ -23,7 +23,7 @@ public class ServicioUsuario1Impl implements ServicioUsuario1 {
             throw new PasswordLongitudIncorrecta();
         }
 
-        Usuario usuarioBuscado = repositorioUsuario.buscar("flor2");
+        Usuario usuarioBuscado = repositorioUsuario.buscar(email);
         if(usuarioBuscado != null){
             return null;
         }
